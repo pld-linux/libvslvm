@@ -1,16 +1,14 @@
 #
 # Conditional build:
-%bcond_without	python	# Python bindings (any)
-%bcond_without	python2	# CPython 2.x bindings
+%bcond_without	python	# Python (3) bindings
 %bcond_without	python3	# CPython 3.x bindings
 #
 %if %{without python}
-%undefine	with_python2
 %undefine	with_python3
 %endif
 # see m4/${libname}.m4 />= for required version of particular library
 %define		libbfio_ver		20201125
-%define		libcdata_ver		20220115
+%define		libcdata_ver		20230108
 %define		libcerror_ver		20120425
 %define		libcfile_ver		20160409
 %define		libclocale_ver		20120425
@@ -21,17 +19,17 @@
 %define		libfcache_ver		20191109
 %define		libfdata_ver		20201129
 %define		libfvalue_ver		20200711
-%define		libuna_ver		20210801
+%define		libuna_ver		20230702
 Summary:	Library to access the Linux Logical Volume Manager (LVM) volume system
 Summary(pl.UTF-8):	Biblioteka dostępu do systemu wolumenów Linux Logical Volume Manager (LVM)
 Name:		libvslvm
-Version:	20221025
+Version:	20231122
 Release:	1
 License:	LGPL v3+
 Group:		Libraries
 #Source0Download: https://github.com/libyal/libvslvm/releases
 Source0:	https://github.com/libyal/libvslvm/releases/download/%{version}/%{name}-experimental-%{version}.tar.gz
-# Source0-md5:	d57ca4f0c1c5dff437c29e73f28ca289
+# Source0-md5:	5d211f31990be327cc7186159d3180e2
 URL:		https://github.com/libyal/libvslvm/
 BuildRequires:	autoconf >= 2.71
 BuildRequires:	automake >= 1.6
@@ -51,7 +49,6 @@ BuildRequires:	libfvalue-devel >= %{libfvalue_ver}
 BuildRequires:	libfuse-devel >= 2.6
 BuildRequires:	libuna-devel >= %{libuna_ver}
 BuildRequires:	libtool >= 2:2
-%{?with_python2:BuildRequires:	python-devel >= 1:2.5}
 %{?with_python3:BuildRequires:	python3-devel >= 1:3.2}
 Requires:	libbfio >= %{libbfio_ver}
 Requires:	libcdata >= %{libcdata_ver}
@@ -165,18 +162,6 @@ Tools to support the Linux Logical Volume Manager (LVM) volume system.
 Narzędzia obsługujące system wolumenów Linux Logical Volume Manager
 (LVM).
 
-%package -n python-pyvslvm
-Summary:	Python 2 bindings for libvslvm library
-Summary(pl.UTF-8):	Wiązania Pythona 2 do biblioteki libvslvm
-Group:		Libraries/Python
-Requires:	%{name} = %{version}-%{release}
-
-%description -n python-pyvslvm
-Python 2 bindings for libvslvm library.
-
-%description -n python-pyvslvm -l pl.UTF-8
-Wiązania Pythona 2 do biblioteki libvslvm.
-
 %package -n python3-pyvslvm
 Summary:	Python 3 bindings for libvslvm library
 Summary(pl.UTF-8):	Wiązania Pythona 3 do biblioteki libvslvm
@@ -200,8 +185,8 @@ Wiązania Pythona 3 do biblioteki libvslvm.
 %{__autoheader}
 %{__automake}
 %configure \
-	%{?with_python2:--enable-python2} \
-	%{?with_python3:--enable-python3}
+	PYTHON_VERSION=3 \
+	%{?with_python3:--enable-python}
 %{__make}
 
 %install
@@ -213,9 +198,6 @@ rm -rf $RPM_BUILD_ROOT
 # obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libvslvm.la
 
-%if %{with python2}
-%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/pyvslvm.{la,a}
-%endif
 %if %{with python3}
 %{__rm} $RPM_BUILD_ROOT%{py3_sitedir}/pyvslvm.{la,a}
 %endif
@@ -249,12 +231,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/vslvminfo
 %attr(755,root,root) %{_bindir}/vslvmmount
 %{_mandir}/man1/vslvminfo.1*
-
-%if %{with python2}
-%files -n python-pyvslvm
-%defattr(644,root,root,755)
-%attr(755,root,root) %{py_sitedir}/pyvslvm.so
-%endif
 
 %if %{with python3}
 %files -n python3-pyvslvm
