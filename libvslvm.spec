@@ -23,13 +23,13 @@
 Summary:	Library to access the Linux Logical Volume Manager (LVM) volume system
 Summary(pl.UTF-8):	Biblioteka dostępu do systemu wolumenów Linux Logical Volume Manager (LVM)
 Name:		libvslvm
-Version:	20231122
+Version:	20240301
 Release:	1
 License:	LGPL v3+
 Group:		Libraries
 #Source0Download: https://github.com/libyal/libvslvm/releases
 Source0:	https://github.com/libyal/libvslvm/releases/download/%{version}/%{name}-experimental-%{version}.tar.gz
-# Source0-md5:	5d211f31990be327cc7186159d3180e2
+# Source0-md5:	7b32c0e9257934c328596d86f41968f2
 URL:		https://github.com/libyal/libvslvm/
 BuildRequires:	autoconf >= 2.71
 BuildRequires:	automake >= 1.6
