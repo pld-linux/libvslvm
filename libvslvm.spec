@@ -23,13 +23,13 @@
 Summary:	Library to access the Linux Logical Volume Manager (LVM) volume system
 Summary(pl.UTF-8):	Biblioteka dostępu do systemu wolumenów Linux Logical Volume Manager (LVM)
 Name:		libvslvm
-Version:	20240301
+Version:	20240504
 Release:	1
 License:	LGPL v3+
 Group:		Libraries
 #Source0Download: https://github.com/libyal/libvslvm/releases
 Source0:	https://github.com/libyal/libvslvm/releases/download/%{version}/%{name}-experimental-%{version}.tar.gz
-# Source0-md5:	7b32c0e9257934c328596d86f41968f2
+# Source0-md5:	7491d52be8ccf0d853678a51cad10d87
 URL:		https://github.com/libyal/libvslvm/
 BuildRequires:	autoconf >= 2.71
 BuildRequires:	automake >= 1.6
@@ -46,7 +46,8 @@ BuildRequires:	libcthreads-devel >= %{libcthreads_ver}
 BuildRequires:	libfcache-devel >= %{libfcache_ver}
 BuildRequires:	libfdata-devel >= %{libfdata_ver}
 BuildRequires:	libfvalue-devel >= %{libfvalue_ver}
-BuildRequires:	libfuse-devel >= 2.6
+# or libfuse >= 2.6
+BuildRequires:	libfuse3-devel >= 3.0
 BuildRequires:	libuna-devel >= %{libuna_ver}
 BuildRequires:	libtool >= 2:2
 %{?with_python3:BuildRequires:	python3-devel >= 1:3.2}
@@ -153,7 +154,7 @@ Summary:	Tools to support the Linux Logical Volume Manager (LVM) volume system
 Summary(pl.UTF-8):	Narzędzia obsługujące system wolumenów Linux Logical Volume Manager (LVM)
 Group:		Applications/File
 Requires:	%{name} = %{version}-%{release}
-Requires:	libfuse >= 2.6
+Requires:	libfuse3 >= 3.0
 
 %description tools
 Tools to support the Linux Logical Volume Manager (LVM) volume system.
